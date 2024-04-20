@@ -95,11 +95,11 @@ print(outputs)
 from IndicTransTokenizer import IndicEvaluator
 
 # this method returns a dictionary with BLEU and ChrF2++ scores with appropriate signatures
-evalutor = IndicEvalutor()
-scores = evalutor.evaluate(tgt_lang=tgt_lang, preds=pred_file, refs=ref_file) 
+evaluator = IndicEvalutor()
+scores = evaluator.evaluate(tgt_lang=tgt_lang, preds=pred_file, refs=ref_file) 
 
-# alternately, you can pass the list of predictions and references instead of files 
-# scores = evalutor.evaluate(tgt_lang=tgt_lang, preds=preds, refs=refs)
+# alternatively, you can pass the list of predictions and references instead of files 
+# scores = evaluator.evaluate(tgt_lang=tgt_lang, preds=preds, refs=refs)
 ```
 
 ### Batching 
@@ -126,7 +126,7 @@ Since this a bleeding-edge module, you may encounter broken stuff and import iss
 
 
 ## Citation
-If you use our codebase, models or tokenizer, please do cite the following paper:
+If you use our codebase, models, or tokenizer, please cite the following paper:
 ```bibtex
 @article{
     gala2023indictrans,
