@@ -4,7 +4,7 @@ The goal of this repository is to provide a simple, modular, and extendable tool
 
 # Major Update (v1.0.0)
 - The [PreTrainedTokenizer](https://huggingface.co/docs/transformers/main_classes/tokenizer) for IndicTrans2 is now available on HF 🎉🎉 Note that, you still need the `IndicProcessor` to pre-process the sentences before tokenization.
-- **In favor of the standard PreTrainedTokenizer, we deprecated the custom tokenizer. However, this custom tokenizer will still be available here for backward compatibility, but no further updates/bug-fixes will be provided.**
+- **In favor of the standard PreTrainedTokenizer, we have deprecated the custom tokenizer. However, this custom tokenizer will still be available here for backward compatibility, but no further updates or bug fixes will be provided.**
 - The `indic_evaluate` function is now consolidated into a concrete `IndicEvaluator` class.
 - The data collation function for training is consolidated into a concrete `IndicDataCollator` class.
 - A simple batching method is now available in the `IndicProcessor`.
