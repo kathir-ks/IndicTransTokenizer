@@ -65,7 +65,7 @@ class IndicEvaluator:
                 indic_tokenize.trivial_tokenize(
                     normalizer.normalize(line.strip()), iso_lang
                 )
-            )
+            ).strip()
             for line in sentences
         ]
         return processed_sentences
