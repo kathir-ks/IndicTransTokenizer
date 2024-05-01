@@ -57,7 +57,7 @@ class IndicEvaluator:
         :param lang: Language code
         :return: List of preprocessed sentences
         """
-        
+
         iso_lang = self._flores_codes.get(lang, "hi")
         normalizer = self._indic_norm_factory.get_normalizer(iso_lang)
         processed_sentences = [

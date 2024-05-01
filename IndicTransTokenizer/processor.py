@@ -433,6 +433,7 @@ class IndicProcessor:
         src_lang: str,
         tgt_lang: str,
         is_target: bool = False,
+        show_progress_bar: bool = False,
     ) -> List[str]:
         """
         Preprocess an array of sentences by normalizing, tokenization, and possibly transliterating it. It also tokenizes the
@@ -448,25 +449,30 @@ class IndicProcessor:
             List[str]: a list of preprocessed input text sentences.
         """
         normalizer = (
-            IndicNormalizerFactory().get_normalizer(self._flores_codes.get(src_lang, "hi"))
+            IndicNormalizerFactory().get_normalizer(
+                self._flores_codes.get(src_lang, "hi")
+            )
             if src_lang != "eng_Latn"
             else None
         )
 
-        preprocessed_sents = [
-            self._preprocess(sent, src_lang, normalizer) for sent in batch
+        if show_progress_bar:
+            batch = tqdm(
+                batch, desc=f" | > Processing sentences ({src_lang}-{tgt_lang})"
+            )
+
+        preprocessed_and_tagged_sents = [
+            (
+                self._apply_lang_tags(
+                    self._preprocess(sent, src_lang, normalizer), src_lang, tgt_lang
+                )
+                if not is_target
+                else self._preprocess(sent, src_lang, normalizer)
+            )
+            for sent in batch
         ]
 
-        tagged_sents = (
-            [
-                self._apply_lang_tags(sent, src_lang, tgt_lang)
-                for sent in preprocessed_sents
-            ]
-            if not is_target
-            else preprocessed_sents
-        )
-
-        return tagged_sents
+        return preprocessed_and_tagged_sents
 
     def _postprocess(
         self,
