@@ -1,7 +1,7 @@
 import re
 from tqdm import tqdm
 from queue import Queue
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Optional
 
 from indicnlp.tokenize import indic_tokenize, indic_detokenize
 from indicnlp.normalize.indic_normalize import IndicNormalizerFactory
@@ -361,7 +361,12 @@ class IndicProcessor:
         return text
 
     def _apply_lang_tags(
-        self, sent: str, src_lang: str, tgt_lang: str, delimiter=" "
+        self,
+        sent: str,
+        src_lang: str,
+        tgt_lang: str,
+        delimiter: str = " ",
+        additional_tag: Optional[str] = None,
     ) -> str:
         """
         Add special tokens indicating source and target language to the start of the each input sentence.
@@ -375,7 +380,12 @@ class IndicProcessor:
         Returns:
             List[str]: list of input sentences with the special tokens added to the start.
         """
-        return f"{src_lang}{delimiter}{tgt_lang}{delimiter}{sent.strip()}"
+        sent = f"{src_lang}{delimiter}{tgt_lang}{delimiter}{sent.strip()}"
+
+        if additional_tag:
+            sent = f"{additional_tag}{delimiter}{sent}"
+
+        return sent
 
     def _preprocess(
         self,
@@ -434,6 +444,7 @@ class IndicProcessor:
         tgt_lang: str,
         is_target: bool = False,
         show_progress_bar: bool = False,
+        additional_tag: str = None,
     ) -> List[str]:
         """
         Preprocess an array of sentences by normalizing, tokenization, and possibly transliterating it. It also tokenizes the
@@ -464,7 +475,10 @@ class IndicProcessor:
         preprocessed_and_tagged_sents = [
             (
                 self._apply_lang_tags(
-                    self._preprocess(sent, src_lang, normalizer), src_lang, tgt_lang
+                    self._preprocess(sent, src_lang, normalizer),
+                    src_lang=src_lang,
+                    tgt_lang=tgt_lang,
+                    additional_tag=additional_tag,
                 )
                 if not is_target
                 else self._preprocess(sent, src_lang, normalizer)
