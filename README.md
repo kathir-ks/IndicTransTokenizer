@@ -81,7 +81,7 @@ sentences = [
     "Please send an SMS to 9876543210 and an email on newemail123@xyz.com by 15th October, 2023.",
 ]
 
-batch = ip.preprocess_batch(sentences, src_lang="eng_Latn", tgt_lang="hin_Deva", show_progress_bar=Falses)
+batch = ip.preprocess_batch(sentences, src_lang="eng_Latn", tgt_lang="hin_Deva", show_progress_bar=False)
 batch = tokenizer(batch, src=True, return_tensors="pt")
 
 with torch.inference_mode():
