@@ -355,11 +355,9 @@ class IndicProcessor:
 
         text = self._normalize_indic_numerals(text.strip())
 
-        print(text)
         if self.inference:
             text = self._wrap_with_placeholders(text, patterns)
-            
-        print(text)
+
         return text
 
     def _apply_lang_tags(
@@ -409,9 +407,7 @@ class IndicProcessor:
         iso_lang = self._flores_codes.get(lang, "hi")
         print(sent)
         sent = self._punc_norm(sent)
-        print(sent)
         sent = self._normalize(sent)
-        print(sent)
 
         transliterate = True
         if lang.split("_")[1] in ["Arab", "Aran", "Olck", "Mtei", "Latn"]:
@@ -439,8 +435,7 @@ class IndicProcessor:
                     normalizer.normalize(sent.strip()), iso_lang
                 )
             )
-
-        print(processed_sent)
+            
         return processed_sent
 
     def preprocess_batch(
